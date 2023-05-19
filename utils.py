@@ -63,8 +63,9 @@ def imputation_performance(ori_x, imputed_x, m, metric_name):
     if metric_name == 'mae':
         performance = mean_absolute_error(ori_x, imputed_x, 1-m)
     elif metric_name == 'mse':
-        performance = mean_squared_error(ori_x, imputed_x, 1-m)
+        performance = mean_squared_error(ori_x, imputed_x, 1-m, squared=True)
     elif metric_name == 'rmse':
-        performance = np.sqrt(mean_squared_error(ori_x, imputed_x))
+        performance = mean_squared_error(
+            ori_x, imputed_x, sample_weight=1-m, squared=False)
 
     return performance

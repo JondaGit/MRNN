@@ -75,12 +75,15 @@ def main(args):
     mrnn_model = mrnn(x, model_parameters)
     mrnn_model.fit(x, m, t)
 
+    x, m, t, ori_x = data_loader(args.file_name,
+                                 args.seq_len,
+                                 args.missing_rate)
     # Impute missing data
     imputed_x = mrnn_model.transform(x, m, t)
 
-    # performance_orig = imputation_performance(ori_x, x, m, args.metric_name)
-    # print('Orig. ' + args.metric_name + ': ' +
-    #       str(np.round(performance_orig, 4)))
+    performance_orig = imputation_performance(ori_x, x, m, args.metric_name)
+    print('Orig. ' + args.metric_name + ': ' +
+          str(np.round(performance_orig, 4)))
     # Evaluate the imputation performance
     performance = imputation_performance(ori_x, imputed_x, m, args.metric_name)
 
